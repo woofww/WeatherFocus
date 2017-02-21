@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                                    android:id="@+id/cardView"
+                                    android:layout_margin="8dp"
+                                    android:clickable="true"
+                                    android:foreground="?android:attr/selectableItemBackground"
+                                    app:cardCornerRadius="3dp"
+                                    app:cardElevation="2dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:paddingTop="15dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/weather_icon"
+            android:src="@mipmap/ic_launcher"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"/>
+        <LinearLayout
+            android:id="@+id/temperature_linear"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginEnd="16dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/current_temp"
+                android:text="3℃"
+                android:textSize="50sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:id="@+id/temp_layout"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <!--layout_gravity表示组件自身在父组件中的位置 -->
+                <TextView
+                    android:id="@+id/high_temp"
+                    android:text=" 4℃"
+                    android:layout_gravity="right"
+                    android:textColor="#BDBDBD"
+                    android:textSize="18sp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/low_temp"
+                    android:text=" -2℃"
+                    android:textColor="#BDBDBD"
+                    android:layout_gravity="right"
+                    android:textSize="18sp"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:gravity="right"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="6dp"
+            android:layout_marginEnd="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/temperature_linear">
+            <!--layout_marginRight到右侧控件的距离-->
+            <TextView
+                android:id="@+id/pm_info"
+                android:text="PM2.5:13"
+                android:layout_marginRight="12dp"
+                android:textColor="#BDBDBD"
+                android:textSize="12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/air_info"
+                android:text="空气质量"
+                android:textColor="#BDBDBD"
+                android:textSize="12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
