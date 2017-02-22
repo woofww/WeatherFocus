@@ -5,20 +5,22 @@
     android:id="@+id/coord"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="256dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-        <!--contentScrim过渡颜色-->
+        <!--contentScrim过渡颜色, 联动效果scrollFlags不能忘记设置-->
         <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:contentScrim="?android:attr/colorPrimary"
             app:expandedTitleGravity="center_horizontal"
             app:expandedTitleMarginTop="200dp"
             app:expandedTitleTextAppearance="@style/textToolbarTitle"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             >
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -43,9 +45,10 @@
                     />
             </RelativeLayout>
             <android.support.v7.widget.Toolbar
-                android:id="@id/toolbar"
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:title="在意天气"
                 app:layout_collapseMode="pin"
                 android:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
