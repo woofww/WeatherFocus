@@ -1,4 +1,4 @@
-package com.woof.weatherfocus.base;
+package com.woof.weatherfocus.model;
 
 /**
  * Created by Woof on 2/12/2017.
