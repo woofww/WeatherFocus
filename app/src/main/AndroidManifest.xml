@@ -18,12 +18,19 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.AboutActivity"
-                  android:screenOrientation="portrait">
-            <!--返回 main activity-->
+        <activity
+            android:name=".ui.AboutActivity"
+            android:screenOrientation="portrait">
+
+            <!-- 返回 main activity -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.MainActivity"/>
+        </activity>
+        <activity
+            android:name=".ui.MultiCityActivity"
+            android:label="@string/title_activity_main2"
+            android:theme="@style/AppTheme">
         </activity>
     </application>
 
