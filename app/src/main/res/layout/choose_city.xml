@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true">
+    <include layout="@layout/part_toolbar"/>
+    <RelativeLayout
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/choose_city_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <!--网络错误响应界面待加入-->
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>
