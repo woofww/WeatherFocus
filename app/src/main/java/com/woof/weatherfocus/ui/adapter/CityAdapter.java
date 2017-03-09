@@ -3,7 +3,6 @@ package com.woof.weatherfocus.ui.adapter;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +10,7 @@ import android.widget.TextView;
 
 import com.woof.weatherfocus.R;
 import com.woof.weatherfocus.base.BaseViewHolder;
+import com.woof.weatherfocus.util.listener.OnRecyclerViewItemListerner;
 
 import java.util.ArrayList;
 
@@ -71,6 +71,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
         TextView mCityItem;
         @BindView(R.id.cardView)
         CardView mCardView;
+
         public CityViewHolder(View itemView) {
             super(itemView);
         }
