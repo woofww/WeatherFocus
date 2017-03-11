@@ -3,6 +3,7 @@ package com.woof.weatherfocus.util;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 /**
@@ -30,5 +31,16 @@ public class TextUtil {
         ClipData clipData = ClipData.newPlainText("msg", info);
         manager.setPrimaryClip(clipData);
         Toast.makeText(context, String.format("[%s] 已经复制到剪切板啦( •̀ .̫ •́ )✧", info), Toast.LENGTH_SHORT).show();
+    }
+
+    public static String setText(String text) {
+        if (text == null){return "";}
+        return text;
+    }
+
+    public static String setText(String prefix, String text){
+        if (TextUtils.isEmpty(text)){ return "";}
+        // 合并操作
+        return TextUtils.concat(prefix, text).toString();
     }
 }

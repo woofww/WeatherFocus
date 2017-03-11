@@ -1,4 +1,4 @@
-package com.woof.weatherfocus.ui.adapter;
+package com.woof.weatherfocus.util.listener;
 
 import android.view.View;
 
@@ -7,5 +7,6 @@ import android.view.View;
  * RecyclerView点击回调接口
  */
 public interface OnRecyclerViewItemListerner {
-    public void onItemClick(View view, int position);
+
+    void onItemClick(View view, int position);
 }

@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.woof.weatherfocus.model.entity.City;
 import com.woof.weatherfocus.model.entity.Province;
+import com.woof.weatherfocus.model.entity.Zone;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +53,24 @@ public class CityUtil {
             } while (cursor.moveToNext());
         }
         cursor.close();
+        return list;
+    }
+
+    public static List<Zone> loadZone(SQLiteDatabase db, int CityId) {
+        List<Zone> list = new ArrayList<>();
+
+        Cursor cursor = db.query("T_Zone", null, "CityID = ?", new String[] {String.valueOf(CityId)},
+                null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Zone zone = new Zone();
+                zone.ZoneID = cursor.getInt(cursor.getColumnIndex("ZoneID"));
+                zone.CityID = CityId;
+                zone.ZoneName = cursor.getString(cursor.getColumnIndex("ZoneName"));
+                list.add(zone);
+            } while (cursor.moveToNext());
+        }
         return list;
     }
 }
