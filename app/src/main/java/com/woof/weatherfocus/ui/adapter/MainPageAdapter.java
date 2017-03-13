@@ -1,6 +1,7 @@
 package com.woof.weatherfocus.ui.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,12 +15,25 @@ import com.woof.weatherfocus.R;
 import com.woof.weatherfocus.base.AnimRecyclerViewAdapter;
 import com.woof.weatherfocus.base.BaseViewHolder;
 import com.woof.weatherfocus.model.entity.WeatherEntity;
+import com.woof.weatherfocus.util.ChartStyleUtil;
 import com.woof.weatherfocus.util.GlideHelper;
 import com.woof.weatherfocus.util.SharedPreferenceUtil;
+import com.woof.weatherfocus.util.TemperatureTransUtil;
 import com.woof.weatherfocus.util.TextUtil;
 import com.woof.weatherfocus.util.TimeUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
+import lecho.lib.hellocharts.gesture.ZoomType;
+import lecho.lib.hellocharts.model.Axis;
+import lecho.lib.hellocharts.model.AxisValue;
+import lecho.lib.hellocharts.model.Line;
+import lecho.lib.hellocharts.model.LineChartData;
+import lecho.lib.hellocharts.model.PointValue;
+import lecho.lib.hellocharts.model.Viewport;
+import lecho.lib.hellocharts.view.LineChartView;
 
 /**
  * 该类为主界面的天气显示界面，涉及到多个类型的item的布局
@@ -39,6 +53,7 @@ public class MainPageAdapter extends AnimRecyclerViewAdapter<RecyclerView.ViewHo
     private static final int TYPE_MAIN = 0;
     private static final int TYPE_SUGGESTION = 1;
     private static final int TYPE_DAYS = 2;
+    private static final int TYPE_CHART = 3;
 
     public MainPageAdapter(WeatherEntity weatherData) {
         this.weatherData = weatherData;
@@ -55,9 +70,12 @@ public class MainPageAdapter extends AnimRecyclerViewAdapter<RecyclerView.ViewHo
             case 0:
                 return MainPageAdapter.TYPE_MAIN;
             case 1:
-                return MainPageAdapter.TYPE_SUGGESTION;
-            case 2:
                 return MainPageAdapter.TYPE_DAYS;
+            case 2:
+                return MainPageAdapter.TYPE_CHART;
+            case 3:
+                return MainPageAdapter.TYPE_SUGGESTION;
+
         }
         return super.getItemViewType(position);
     }
@@ -84,6 +102,9 @@ public class MainPageAdapter extends AnimRecyclerViewAdapter<RecyclerView.ViewHo
             case TYPE_DAYS:
                 return new DaysViewHolder(LayoutInflater.from(mContext).
                         inflate(R.layout.forecast_item, parent, false));
+            case TYPE_CHART:
+                return new ChartViewHolder(LayoutInflater.from(mContext).
+                        inflate(R.layout.forecast_linechart_item, parent, false));
         }
         return null;
     }
@@ -107,8 +128,14 @@ public class MainPageAdapter extends AnimRecyclerViewAdapter<RecyclerView.ViewHo
                 break;
             case TYPE_DAYS:
                     ((DaysViewHolder) holder).bind(weatherData);
+                break;
+            case TYPE_CHART:
+                ((ChartViewHolder) holder).bind(weatherData);
             default:
                 break;
+        }
+        if (SharedPreferenceUtil.getInstance().getAnimationSwitch()) {
+            showItemAnim(holder.itemView, position);
         }
     }
 
@@ -121,7 +148,7 @@ public class MainPageAdapter extends AnimRecyclerViewAdapter<RecyclerView.ViewHo
      */
     @Override
     public int getItemCount() {
-        return 3;
+        return 4;
     }
 
     class MainViewHolder extends BaseViewHolder<WeatherEntity> {
@@ -154,15 +181,19 @@ public class MainPageAdapter extends AnimRecyclerViewAdapter<RecyclerView.ViewHo
             highTemp.setText(String.format("↑ %s ℃", weather.dailyForecast.get(0).tmp.max));
             // 当日最低温度
             lowTemp.setText(String.format("↓ %s ℃", weather.dailyForecast.get(0).tmp.min));
-            // 当日PM2.5
-            pmInfo.setText(String.format("PM2.5: %s μg/m³", TextUtil.setText("" + weather.aqi.city.pm25)));
-            // 当日空气质量
-            airInfo.setText(TextUtil.setText("空气质量: ", weather.aqi.city.qlty));
+            // 部分地区空气质量指数不存在，分别处理
+            if (weather.aqi != null){
+                // 当日PM2.5
+                pmInfo.setText(String.format("PM2.5: %s μg/m³", TextUtil.setText("" + weather.aqi.city.pm25)));
+                // 当日空气质量
+                airInfo.setText(TextUtil.setText("空气质量: ", weather.aqi.city.qlty));
+            } else {
+                pmInfo.setText("");
+                airInfo.setText("");
+            }
             // 加载天气图标
             GlideHelper.imageLoad(itemView.getContext(), SharedPreferenceUtil.getInstance().
                     getInt(weather.now.cond.txt, R.mipmap.none_respond), weatherIcon);
-
-            Log.e("调用bind", "测试");
         }
     }
 
@@ -184,6 +215,12 @@ public class MainPageAdapter extends AnimRecyclerViewAdapter<RecyclerView.ViewHo
         TextView uvBrief;
         @BindView(R.id.uv_txt)
         TextView uvContent;
+        @BindView(R.id.washcar_brief)
+        TextView carBrief;
+        @BindView(R.id.washcar_txt)
+        TextView carContent;
+
+
 
         SuggestionViewHolder(View itemView) {
             super(itemView);
@@ -198,8 +235,8 @@ public class MainPageAdapter extends AnimRecyclerViewAdapter<RecyclerView.ViewHo
             sportContent.setText(weather.suggestion.sport.txt);
             uvBrief.setText(weather.suggestion.uv.brf);
             uvContent.setText(weather.suggestion.uv.txt);
-
-            Log.e("调用bind", "绑定成功");
+            carBrief.setText(weather.suggestion.cw.brf);
+            carContent.setText(weather.suggestion.cw.txt);
         }
 
     }
@@ -220,7 +257,7 @@ public class MainPageAdapter extends AnimRecyclerViewAdapter<RecyclerView.ViewHo
             super(itemView);
 
             forecastContainer = ((LinearLayout) itemView.findViewById(R.id.forecast_linear));
-            for (int i = 0; i < weatherData.dailyForecast.size(); i++) {
+            for (int i = 0; i < weatherData.dailyForecast.size() - 2; i++) {
                 View view = View.inflate(mContext, R.layout.forecast_info_item, null);
                 forecastIcon[i] = ((ImageView) view.findViewById(R.id.forecast_icon));
                 forecastDate[i] = ((TextView)  view.findViewById(R.id.forecast_date));
@@ -235,7 +272,7 @@ public class MainPageAdapter extends AnimRecyclerViewAdapter<RecyclerView.ViewHo
             forecastDate[0].setText("今天");
             forecastDate[1].setText("明天");
 
-            for (int i = 0; i < weatherData.dailyForecast.size(); i++){
+            for (int i = 0; i < weatherData.dailyForecast.size() - 2; i++){
                 if (i > 1) {
                     try {
                         forecastDate[i].setText(TimeUtil.dayForWeek(weather.dailyForecast.get(i).date));
@@ -258,5 +295,118 @@ public class MainPageAdapter extends AnimRecyclerViewAdapter<RecyclerView.ViewHo
                         weather.dailyForecast.get(i).pop));
             }
         }
+    }
+
+    class ChartViewHolder extends BaseViewHolder<WeatherEntity> {
+
+        @BindView(R.id.chart)
+        LineChartView mLineCharView;
+
+        ChartStyleUtil mChartStyleUtil = new ChartStyleUtil();
+        Axis mAxisX = new Axis();
+        Axis mAxisY = new Axis().setHasLines(true);
+         LineChartData mChartData = new LineChartData();
+
+        // 用于保存在图当中显示的曲线，HelloChart的库最多显示四条
+        private List<Line> mLines = new ArrayList<>();
+        private List<PointValue> mPointValueMax = new ArrayList<>();
+        private List<PointValue> mPointValueMin = new ArrayList<>();
+//        private List<AxisValue> mAxisValue = new ArrayList<>();
+
+        private final int numberOfLines = 2;
+
+        ChartViewHolder(View itemView) {
+            super(itemView);
+        }
+
+        /**
+         * 对图当中的数据进行填充
+         * @param weather
+         */
+        @Override
+        public void bind(WeatherEntity weather) {
+
+            AxisLabel(weather); // 标注坐标轴
+            mChartData = mChartStyleUtil.getChartData(initDataSet(weather)); // 获取布局填充数据
+            mChartStyleUtil.setAxis(mAxisX, mAxisY, AxisLabel(weather), mChartData); // 设置样式
+            initLineChart(mChartData);
+
+
+        }
+
+        private void initLineChart(LineChartData lineChartData) {
+            mLineCharView.setLineChartData(lineChartData);
+            mLineCharView.setInteractive(true);
+            mLineCharView.setVisibility(View.VISIBLE);
+            mLineCharView.setViewportCalculationEnabled(true);
+            mLineCharView.setZoomType(ZoomType.HORIZONTAL); // 缩放类型，水平
+            mLineCharView.setMaxZoom((float) 3);// 缩放比例
+            Viewport viewport = new Viewport(mLineCharView.getMaximumViewport());
+            viewport.left = 0;
+            viewport.right = 7;
+            mLineCharView.setCurrentViewport(viewport);
+        }
+
+        private List<Line> initDataSet(WeatherEntity weather) {
+
+            /**
+             * 由于曲线图中存在两条线，分别为最高温趋势线和最低温趋势线，
+             * 分两个case进行操作，将图的数据存储到分别存储到各自的line当中
+             */
+            for (int i = 0; i < numberOfLines; i++) {
+                switch (i) {
+                    case 0:
+                        /**
+                         * 添加数据集,通过parseFloat对天气字符字符串进行转型
+                         */
+                        for (int j = 0; j < AxisLabel(weather).size(); j++) {
+                            // 添加最高温度数据集
+                            mPointValueMax.add(new PointValue(j, Float.parseFloat(weather
+                                    .dailyForecast
+                                    .get(j).tmp.max)));
+                        }
+                        Line lineMax = new Line(mPointValueMax);
+                        mLines.add(mChartStyleUtil.getChartStyle(Color.parseColor("#E64A19"), lineMax));
+                        break;
+                    case 1:
+                        for (int j = 0; j < AxisLabel(weather).size(); j++) {
+                            // 添加最低温度数据集
+                            mPointValueMin.add(new PointValue(j, Float.parseFloat(weather
+                                    .dailyForecast
+                                    .get(j).tmp.min)));
+                        }
+                        Line lineMin = new Line(mPointValueMin);
+                        mLines.add(mChartStyleUtil.getChartStyle(Color.parseColor("#ff9800"), lineMin));
+                        break;
+                }
+            }
+            int i = AxisLabel(weather).size();
+            Log.e("是否存在数据", "" + i);
+            return mLines;
+        }
+
+        private List<AxisValue> AxisLabel(WeatherEntity weatherEntity) {
+
+            /**
+             * 对x轴的坐标进行标注,同时获取x轴坐标列表
+             */
+            List<AxisValue> axisValue = new ArrayList<>();
+            axisValue.add(new AxisValue(0).setLabel("今日"));
+            axisValue.add(new AxisValue(1).setLabel("明日"));
+
+            for (int i = 0; i < weatherData.dailyForecast.size(); i++) {
+                // 该部分用于对轴坐标进行更新
+                if (i > 1) {
+                    try {
+                        axisValue.add(new AxisValue(i)
+                                .setLabel(TimeUtil.dayForWeek(weatherEntity.dailyForecast.get(i).date)));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            return axisValue;
+        }
+
     }
 }

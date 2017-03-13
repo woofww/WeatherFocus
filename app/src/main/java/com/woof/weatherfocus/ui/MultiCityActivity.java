@@ -21,6 +21,7 @@ import com.woof.weatherfocus.util.TextUtil;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Handler;
 
@@ -28,6 +29,7 @@ import java.util.logging.Handler;
 public class MultiCityActivity extends ToolBarActivity {
 
     private RecyclerView mRecyclerView;
+
     // 用于存储显示数据
     private ArrayList<String> dataList = new ArrayList<>();
     private Province mProvince;
@@ -55,8 +57,8 @@ public class MultiCityActivity extends ToolBarActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        initRecyclerView();
                         queryProvince();
+                        initRecyclerView();
                     }
                 });
             }
@@ -66,7 +68,7 @@ public class MultiCityActivity extends ToolBarActivity {
     @Override
     public void onBackPressed() {
         if (currentLevel == PROVINCE_LEVEL){
-            this.finish();
+            exitActivity();
         } else {
             queryProvince();
             mRecyclerView.smoothScrollToPosition(0);
@@ -103,28 +105,33 @@ public class MultiCityActivity extends ToolBarActivity {
         mCityAdapter.setOnRecyclerViewItemListerner(new OnRecyclerViewItemListerner() {
             @Override
             public void onItemClick(View view, int position) {
-                if (currentLevel == PROVINCE_LEVEL){
-                    mProvince = mProvinceList.get(position);
-                    mRecyclerView.smoothScrollToPosition(0);
-                    queryCity();
-                } else if (currentLevel == CITY_LEVEL){
-                    // 该部分用于修改主布局的城市
+                switch (currentLevel) {
+                    case PROVINCE_LEVEL:
+                        mProvince = mProvinceList.get(position);
+                        mRecyclerView.smoothScrollToPosition(0);
+                        queryCity();
+                        break;
+                    case CITY_LEVEL:
+                        // 该部分用于修改主布局的城市
 //                    String city = TextUtil.replaceCityName(mCityList.get(position).CityName);
 //                    SharedPreferenceUtil.getInstance().setCity(city);
 //                    startActivity(new Intent(MultiCityActivity.this, MainActivity.class));
 //                    Log.e("点击", city);
-                    mCity = mCityList.get(position);
-                    mRecyclerView.smoothScrollToPosition(0);
-                    queryZone();
-                } else if (currentLevel == ZONE_LEVEL){
-                    String zone;
-                    if (mZoneList.size() == 0) {
-                        zone = TextUtil.replaceCityName(dataList.get(0));
-                    } else {
-                        zone = TextUtil.replaceCityName(mZoneList.get(position).ZoneName);
-                    }
-                    SharedPreferenceUtil.getInstance().setCity(zone);
-                    startActivity(new Intent(MultiCityActivity.this, MainActivity.class));
+                        mCity = mCityList.get(position);
+                        mRecyclerView.smoothScrollToPosition(0);
+                        queryZone();
+                        break;
+                    case ZONE_LEVEL:
+                        String zone;
+                        if (mZoneList.size() == 0) {
+                            zone = TextUtil.replaceCityName(dataList.get(0));
+                        } else {
+                            zone = TextUtil.replaceCityName(mZoneList.get(position).ZoneName);
+                        }
+                        SharedPreferenceUtil.getInstance().setCity(zone);
+                        startActivity(new Intent(MultiCityActivity.this, MainActivity.class));
+                        exitActivity();
+                        break;
                 }
             }
         });
@@ -208,5 +215,9 @@ public class MultiCityActivity extends ToolBarActivity {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private void exitActivity() {
+        MultiCityActivity.this.finish();
     }
 }
