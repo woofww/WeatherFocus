@@ -13,6 +13,7 @@ public class BaseApplication extends Application{
 
     private static BaseApplication App;
     private static String sCacheDir;
+    private static Context sAppContext;
 
     @Override
     public void onCreate() {
@@ -21,6 +22,7 @@ public class BaseApplication extends Application{
          * Configure context instance
          */
         App = this;
+        sAppContext = getApplicationContext();
 
 
     }
@@ -29,8 +31,12 @@ public class BaseApplication extends Application{
      * Used to return Application Instance
      * @return
      */
-    public static BaseApplication getInstance(){
+    public static BaseApplication getApplication(){
         return App;
+    }
+
+    public static Context getAppContext(){
+        return sAppContext;
     }
 
     public static String getAppCacheDir(){return sCacheDir;}

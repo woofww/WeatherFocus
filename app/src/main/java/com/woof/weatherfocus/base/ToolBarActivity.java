@@ -11,8 +11,8 @@ import android.view.animation.DecelerateInterpolator;
 
 import com.woof.weatherfocus.R;
 
-/**
- * Created by Woof on 2/25/2017.
+/** Inspaired by Drakeet
+ *  Created by Woof on 2/25/2017.
  */
 
 public abstract class ToolBarActivity extends BaseActivity{
