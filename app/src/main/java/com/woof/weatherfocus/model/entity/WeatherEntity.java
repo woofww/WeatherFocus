@@ -28,8 +28,6 @@ public class WeatherEntity implements Serializable {
     @SerializedName("daily_forecast") public List<DailyForecastEntity> dailyForecast;
 
 
-    @SerializedName("hourly_forecast") public List<HourlyForecastEntity> hourlyForecast;
-
     public static class AqiEntity implements Serializable {
 
         @SerializedName("city") public CityEntity city;
@@ -241,26 +239,4 @@ public class WeatherEntity implements Serializable {
         }
     }
 
-    public static class HourlyForecastEntity implements Serializable {
-        @SerializedName("date") public String date;
-        @SerializedName("hum") public String hum;
-        @SerializedName("pop") public String pop;
-        @SerializedName("pres") public String pres;
-        @SerializedName("tmp") public String tmp;
-        /**
-         * deg : 13
-         * dir : 东北风
-         * sc : 微风
-         * spd : 16
-         */
-
-        @SerializedName("wind") public WindEntity wind;
-
-        public static class WindEntity implements Serializable {
-            @SerializedName("deg") public String deg;
-            @SerializedName("dir") public String dir;
-            @SerializedName("sc") public String sc;
-            @SerializedName("spd") public String spd;
-        }
-    }
 }

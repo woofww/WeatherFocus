@@ -7,6 +7,8 @@ import java.io.Serializable;
  */
 
 public class Zone implements Serializable {
+
     public String ZoneName;
     public int ZoneID;
+    public int CityID;
 }
