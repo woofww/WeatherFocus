@@ -11,7 +11,7 @@ import retrofit2.http.Query;
  */
 
 public interface WeatherService {
-    static final String baseUrl = "https://free-api.heweather.com/v5/";
+    String baseURL = "https://free-api.heweather.com/v5/";
     @GET("weather")
     Call<Weather> getWeather(@Query("city") String city, @Query("key") String key);
 }

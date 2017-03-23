@@ -1,13 +1,6 @@
 package com.woof.weatherfocus.network;
 
-import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
-
 import com.woof.weatherfocus.base.BaseApplication;
-import com.woof.weatherfocus.model.Constant;
-import com.woof.weatherfocus.model.entity.Weather;
-import com.woof.weatherfocus.model.entity.WeatherEntity;
 import com.woof.weatherfocus.util.NetworkUtil;
 
 import java.io.File;
@@ -20,8 +13,6 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -36,7 +27,6 @@ public class RetrofitHelper {
     private static Retrofit sRetrofit = null;
     private static OkHttpClient sOkHttpClient = null;
 
-    private Weather weather = null;
 
     private RetrofitHelper(){
         init();
@@ -131,4 +121,7 @@ public class RetrofitHelper {
          */
         private static final RetrofitHelper INSTANCE = new RetrofitHelper();
     }
+
+    public WeatherService getWeatherService(){ return sWeatherService;}
+
 }
