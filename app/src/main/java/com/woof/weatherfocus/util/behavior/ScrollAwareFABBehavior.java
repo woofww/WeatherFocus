@@ -32,8 +32,8 @@ public class ScrollAwareFABBehavior extends FloatingActionButton.Behavior {
     public boolean onDependentViewChanged(CoordinatorLayout parent, FloatingActionButton fab, View dependency) {
         boolean returnValue = super.onDependentViewChanged(parent, fab, dependency);
         if (dependency instanceof AppBarLayout) {
-            CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
-            int fabBottomMargin = lp.bottomMargin;
+            CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
+            int fabBottomMargin = layoutParams.bottomMargin;
             int distanceToScroll = fab.getHeight() + fabBottomMargin;
             float ratio = (float)dependency.getY()/(float)toolbarHeight;
             fab.setTranslationY(-distanceToScroll * ratio);
