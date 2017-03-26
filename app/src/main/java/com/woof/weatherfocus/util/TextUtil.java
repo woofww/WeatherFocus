@@ -13,12 +13,32 @@ import android.widget.Toast;
 public class TextUtil {
     /**
      * 该部分用于从数据库中取城市名称时候，通过正则表达式去除无用信息
+     * update: 修改正则表达式导致城市显示出错问题，改用条件判断
      * @param city
      * @return
      */
     public static String replaceCityName(String city){
-        city = city.replaceAll("(?:省|市|自治区|县|区|旗|盟|自治区|特别行政区)", "");
-        return city;
+        if (city.endsWith("省")) {
+            return city.substring(0, city.lastIndexOf("省"));
+        } else if (city.endsWith("市")) {
+            return city.substring(0, city.lastIndexOf("市"));
+        } else if (city.endsWith("自治区")) {
+            return city.substring(0, city.lastIndexOf("自治区"));
+        } else if (city.endsWith("县")) {
+            if (city.length() <= 2) {
+                return city;
+            }
+            return city.substring(0, city.lastIndexOf("县"));
+        } else if (city.endsWith("区")) {
+            return city.substring(0, city.lastIndexOf("区"));
+        } else if (city.endsWith("旗")) {
+            return city.substring(0, city.lastIndexOf("旗"));
+        } else if (city.endsWith("盟")) {
+            return city.substring(0, city.lastIndexOf("盟"));
+        } else if (city.endsWith("特别行政区")) {
+            return city.substring(0, city.lastIndexOf("特别行政区"));
+        }
+        return "";
     }
 
     /**
