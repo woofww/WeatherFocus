@@ -1,7 +1,5 @@
 package com.woof.weatherfocus.util;
 
-import android.util.Log;
-
 import com.woof.weatherfocus.R;
 
 /**
@@ -26,6 +24,7 @@ public class WeatherIconUtil {
                 SharedPreferenceUtil.getInstance().setInt("小雨", R.mipmap.rain_day);
                 SharedPreferenceUtil.getInstance().setInt("中雨", R.mipmap.weather_showers_day);
                 SharedPreferenceUtil.getInstance().setInt("大雨", R.mipmap.weather_showers_day);
+                SharedPreferenceUtil.getInstance().setInt("阵雪", R.mipmap.weather_snow);
                 SharedPreferenceUtil.getInstance().setInt("雨夹雪", R.mipmap.snow_rain);
                 SharedPreferenceUtil.getInstance().setInt("小雪", R.mipmap.weather_snow);
                 SharedPreferenceUtil.getInstance().setInt("中雪", R.mipmap.snow_scattered_day);

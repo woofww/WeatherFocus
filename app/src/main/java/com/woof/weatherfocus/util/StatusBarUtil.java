@@ -5,8 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.view.ViewGroup;
 
-import com.woof.weatherfocus.util.EnvirUtil;
-
 
 /**
  * Created by Woof on 2/23/2017.

@@ -24,19 +24,21 @@ public class TextUtil {
             return city.substring(0, city.lastIndexOf("市"));
         } else if (city.endsWith("自治区")) {
             return city.substring(0, city.lastIndexOf("自治区"));
+        } else if(city.endsWith("自治县")) {
+            return city.substring(0, city.lastIndexOf("自治县"));
         } else if (city.endsWith("县")) {
             if (city.length() <= 2) {
                 return city;
             }
             return city.substring(0, city.lastIndexOf("县"));
+        }  else if (city.endsWith("特别行政区")) {
+            return city.substring(0, city.lastIndexOf("特别行政区"));
         } else if (city.endsWith("区")) {
             return city.substring(0, city.lastIndexOf("区"));
         } else if (city.endsWith("旗")) {
             return city.substring(0, city.lastIndexOf("旗"));
         } else if (city.endsWith("盟")) {
             return city.substring(0, city.lastIndexOf("盟"));
-        } else if (city.endsWith("特别行政区")) {
-            return city.substring(0, city.lastIndexOf("特别行政区"));
         }
         return "";
     }

@@ -14,11 +14,13 @@ import com.woof.weatherfocus.base.BaseApplication;
 
 public class SharedPreferenceUtil {
 
-    static final String CITY_NAME = "city"; //用于存储当前城市或者定位城市
-    static final String CACHE_STATE = "cache_state"; //操作缓存状态
-    static final String AUTO_UPDATE = "update_time_change"; //自动更新时长
-    static final String NOLIFICATION_STATUS = "nolification_status"; //存储通知状态
-    static final String ANIMATION_SWITCH = "animation_switch"; //RecyclerView的动画切换
+    public static final String CITY_NAME = "city"; //用于存储当前城市或者定位城市
+    public static final String CACHE_CLEAR = "clear_cache"; //操作缓存状态
+    public static final String AUTO_UPDATE = "update_time_change"; //自动更新时长
+    public static final String NOLIFICATION_STATUS = "nolification_status"; //存储通知状态
+    public static final String TEMP_UNIT = "temp_unit";
+    public static final String ANIMATION_SWITCH = "animation_switch"; //RecyclerView的动画切换
+
     public static final int ONE_HOUR = 1000 * 60 * 60; // ms为基本单位
 
     private SharedPreferences mSharedPreferences;
@@ -57,6 +59,25 @@ public class SharedPreferenceUtil {
     public String getCity() {
         return mSharedPreferences.getString(CITY_NAME, "北京");
     }
+
+    // 设置Recyclerview的动态效果的开闭
+    public void setAnimationSwitch(boolean a) {
+        mSharedPreferences.edit().putBoolean(ANIMATION_SWITCH, a).apply();
+    }
+
+    public boolean getAnimationSwitch() {
+        return mSharedPreferences.getBoolean(ANIMATION_SWITCH, false);
+    }
+
+    // 对温度单位进行设置
+    public void setTempUnit(boolean b) {
+        mSharedPreferences.edit().putBoolean(TEMP_UNIT, b).apply();
+    }
+
+    public boolean getTempUnit() {
+        return mSharedPreferences.getBoolean(TEMP_UNIT, false);
+    }
+
 
     public void setInt(String key, int value) {
         mSharedPreferences.edit().putInt(key, value).apply();
