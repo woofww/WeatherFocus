@@ -21,8 +21,8 @@ import java.io.InputStream;
 public class DBHelper {
 
     private static final String DB_NAME = "china_city.db"; //应用内用于城市查询的数据库
-    static final String PACKAGE_NAME = "com.woof.weatherfocus";
-    static final String DB_PATH = "/data" + Environment.getDataDirectory().getAbsolutePath() + "/" +
+    private static final String PACKAGE_NAME = "com.woof.weatherfocus";
+    private static final String DB_PATH = "/data" + Environment.getDataDirectory().getAbsolutePath() + "/" +
             PACKAGE_NAME; //该部分设置城市数据库的存放位置
     private SQLiteDatabase mSQLiteDatabase;
 
@@ -52,7 +52,7 @@ public class DBHelper {
             if (!(new File(dbFile).exists())){
                 InputStream is = BaseApplication.getAppContext().getResources().openRawResource(R.raw.china_city);//不存在直接导入
                 FileOutputStream fos = new FileOutputStream(dbFile);
-                int BUFFER_SIZE = 500000;
+                int BUFFER_SIZE = 40000;
                 byte[] buffer = new byte[BUFFER_SIZE];
                 int count;
                 while((count = is.read(buffer)) > 0){
