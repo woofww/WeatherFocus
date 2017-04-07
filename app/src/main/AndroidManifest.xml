@@ -43,9 +43,11 @@
             <intent-filter>
                 <!--filter必须存在action规则，可以同时存在多个action规则，彼此之间的或的关系-->
                 <action android:name="android.intent.action.MAIN"/>
-                <!---->
+                
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <meta-data android:name="android.app.shortcuts"
+                       android:resource="@xml/shortcuts"/>
         </activity>
 
         <activity android:name=".ui.MainActivity"
