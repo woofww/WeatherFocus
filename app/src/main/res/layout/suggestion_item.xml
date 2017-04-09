@@ -5,6 +5,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:clickable="true"
+                                    android:layout_margin="@dimen/cardview_margin"
                                     android:foreground="?android:attr/selectableItemBackground"
                                     card_view:cardCornerRadius="3dp"
                                     card_view:cardElevation="2dp">
@@ -20,7 +21,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp">
 
             <ImageView
                 android:layout_gravity="center_vertical"
@@ -66,7 +68,8 @@
         <LinearLayout
             android:layout_marginTop="12dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp">
 
             <ImageView
                 android:layout_gravity="center_vertical"
@@ -113,54 +116,8 @@
         <LinearLayout
             android:layout_marginTop="12dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_gravity="center_vertical"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/ic_travelling"
-                />
-
-            <LinearLayout
-                android:layout_marginStart="64dp"
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="旅游指数---"/>
-                    <TextView
-                        android:id="@+id/travel_brief"
-                        android:text="适宜"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-
-
-
-                <TextView
-                    android:textSize="12sp"
-                    android:id="@+id/travel_txt"
-                    android:text="天气较好，温度适宜，但风稍微有点大。这样的天气适宜旅游，您可以尽情地享受大自然的无限风光。"
-                    android:layout_marginTop="2dp"
-                    android:textColor="#969696"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="12dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp">
 
             <ImageView
                 android:layout_gravity="center_vertical"
@@ -202,6 +159,101 @@
 
             </LinearLayout>
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp">
+
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_uv"
+                />
+
+            <LinearLayout
+                android:layout_marginStart="64dp"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="紫外线指数---"/>
+                    <TextView
+                        android:id="@+id/uv_brief"
+                        android:text="适宜"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+
+
+                <TextView
+                    android:textSize="12sp"
+                    android:id="@+id/uv_txt"
+                    android:text="属弱紫外线辐射天气，无需特别防护。若长期在户外，建议涂擦SPF在8-12之间的防晒护肤品。"
+                    android:layout_marginTop="2dp"
+                    android:textColor="#969696"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="5dp">
+
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_car"
+                />
+
+            <LinearLayout
+                android:layout_marginStart="64dp"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="洗车指数---"/>
+                    <TextView
+                        android:id="@+id/washcar_brief"
+                        android:text="较适宜"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:textSize="12sp"
+                    android:id="@+id/washcar_txt"
+                    android:layout_marginTop="2dp"
+                    android:text="较适宜洗车，未来一天无雨，风力较小，擦洗一新的汽车至少能保持一天。"
+                    android:textColor="#969696"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>

@@ -10,10 +10,10 @@
 
     <ImageView
         android:id="@+id/forecast_icon"
-        android:src="@mipmap/ic_launcher"
         android:layout_gravity="center_vertical"
         android:layout_width="32dp"
         android:layout_height="32dp"
+        android:src="@mipmap/sunny"
         />
 
     <RelativeLayout
@@ -28,7 +28,7 @@
             android:textSize="18sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="今日"/>
+            android:text="天津"/>
 
         <TextView
             android:textSize="18sp"
